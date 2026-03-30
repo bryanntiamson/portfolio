@@ -326,7 +326,7 @@ function renderProjectCards() {
     return `
       <div class="category-band">
         <div class="category-band-header">
-          <span class="section-label" style="margin-bottom:0">${cat}</span>
+          <span class="category-label">${cat}</span>
           <span class="category-count">${projects.length} project${projects.length !== 1 ? 's' : ''}</span>
         </div>
         <div class="category-row">${cardsHtml}</div>

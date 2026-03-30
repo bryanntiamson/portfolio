@@ -324,6 +324,14 @@ section:nth-child(even) { background: var(--gray-100); }
   margin-bottom: 16px;
 }
 
+.category-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gray-400);
+}
+
 .category-count {
   font-size: 0.72rem;
   color: var(--gray-400);
@@ -759,6 +767,7 @@ footer {
   .btn-primary, .btn-secondary { display: block; text-align: center; padding: 14px 24px; }
 
   /* — About — */
+  .about-portrait { display: none; }
   .about-details {
     background: none;
     border: none;
@@ -766,11 +775,6 @@ footer {
     flex-direction: row;
     flex-wrap: wrap;
     gap: 16px 24px;
-  }
-  .about-portrait {
-    width: 100px; height: 100px;
-    margin: 0 auto 0;
-    flex: 0 0 100%;
   }
   .detail-item { flex: 1 1 140px; }
 
