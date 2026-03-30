@@ -102,7 +102,7 @@ const PROJECTS = {
 
   'instron-sneaker': {
     title: 'Under Armour Instron Sneaker Fixture',
-    tag: 'Manufacturing',
+    tag: 'Materials',
     tools: 'Autodesk Inventor · SolidWorks · Instron · CAD',
     pdf: 'assets/All Projects/Team 125_Report_Version 4.docx.pdf',
     photos: [],
@@ -114,7 +114,7 @@ const PROJECTS = {
 
   'instron-gait': {
     title: 'Instron Gait Compatibility Fixture (Honors)',
-    tag: 'Manufacturing',
+    tag: 'Biomechanics',
     tools: 'SolidWorks · Instron E10000 · CAD',
     pdf: 'assets/All Projects/Honors Project Writeup.pdf',
     photos: [],
@@ -274,7 +274,7 @@ const THUMBNAILS = {
 // ── Category Order ────────────────────────────────────────────────────────────
 
 const CATEGORY_ORDER = [
-  'Aerospace', 'Controls', 'Manufacturing', 'Materials',
+  'Aerospace', 'Controls', 'Biomechanics', 'Manufacturing', 'Materials',
   'Sustainability', 'Computational Physics', 'Astrophysics',
   'Engineering Design', 'Humanities',
 ];
