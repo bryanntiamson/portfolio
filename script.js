@@ -1,3 +1,17 @@
+// Hamburger menu toggle
+const hamburger = document.getElementById('navHamburger');
+const navLinks = document.getElementById('navLinks');
+hamburger.addEventListener('click', () => {
+  navLinks.classList.toggle('open');
+  hamburger.classList.toggle('open');
+});
+document.querySelectorAll('.nav-links a').forEach(a => {
+  a.addEventListener('click', () => {
+    navLinks.classList.remove('open');
+    hamburger.classList.remove('open');
+  });
+});
+
 // Nav shadow on scroll
 const navbar = document.getElementById('navbar');
 window.addEventListener('scroll', () => {
@@ -6,12 +20,12 @@ window.addEventListener('scroll', () => {
 
 // Smooth active link highlighting
 const sections = document.querySelectorAll('section[id]');
-const navLinks = document.querySelectorAll('.nav-links a');
+const navLinkItems = document.querySelectorAll('.nav-links a');
 
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
-      navLinks.forEach(link => {
+      navLinkItems.forEach(link => {
         link.style.color = link.getAttribute('href') === `#${entry.target.id}` ? 'var(--accent)' : '';
       });
     }

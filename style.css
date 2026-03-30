@@ -666,6 +666,28 @@ footer {
   border-top: 1px solid var(--gray-200);
 }
 
+/* ── Hamburger button (hidden on desktop) ── */
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+}
+.nav-hamburger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--black);
+  border-radius: 2px;
+  transition: transform 0.2s, opacity 0.2s;
+}
+.nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-hamburger.open span:nth-child(2) { opacity: 0; }
+.nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
 /* ── Responsive ── */
 @media (max-width: 700px) {
   .about-grid { grid-template-columns: 1fr; gap: 32px; }
@@ -673,9 +695,52 @@ footer {
   .timeline-item { grid-template-columns: 1fr; gap: 6px; padding-left: 20px; }
   .timeline-item::before { left: -7px; }
   .timeline-date { text-align: left; }
-  .nav-links { gap: 18px; }
   .project-card { flex: 0 0 calc(50% - 7px); min-width: 0; }
 }
+
+@media (max-width: 600px) {
+  /* Section padding */
+  section { padding: 64px 20px; }
+  #hero { padding-left: 20px; padding-right: 20px; }
+
+  /* Nav — hamburger */
+  .nav-hamburger { display: flex; }
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: var(--nav-h);
+    left: 0; right: 0;
+    flex-direction: column;
+    gap: 0;
+    background: rgba(255,255,255,0.98);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--gray-200);
+    padding: 8px 0 16px;
+  }
+  .nav-links.open { display: flex; }
+  .nav-links li { list-style: none; }
+  .nav-links a { display: block; padding: 12px 24px; font-size: 1rem; }
+
+  /* Hero */
+  .hero-content { gap: 32px; }
+  .hero-photo { height: 220px; border-radius: 8px; }
+  .hero-cta { flex-direction: column; }
+  .btn-primary, .btn-secondary { text-align: center; }
+
+  /* Modal */
+  .modal-overlay { padding: 16px 12px; }
+  .modal-box { padding: 24px 20px; }
+  .modal-box h2 { font-size: 1.15rem; }
+  .pdf-embed { height: 58vh; }
+
+  /* Projects */
+  .category-row { gap: 10px; }
+  .projects-grid { gap: 36px; }
+
+  /* Skills */
+  .skill-tags span { font-size: 0.78rem; padding: 4px 10px; }
+}
+
 @media (max-width: 480px) {
   .project-card { flex: 0 0 100%; }
 }
