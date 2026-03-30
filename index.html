@@ -26,14 +26,17 @@
   <!-- HERO -->
   <section id="hero">
     <div class="hero-content">
-      <p class="hero-greeting">Hi, I'm</p>
-      <h1>Bryan Tiamson</h1>
-      <h2>Mechanical & Aerospace Engineer</h2>
-      <p class="hero-sub">Physical Design Engineer at Sargent & Lundy · University of Delaware '24</p>
-      <div class="hero-cta">
-        <a href="#contact" class="btn-primary">Get in Touch</a>
-        <a href="#projects" class="btn-secondary">View Projects</a>
+      <div class="hero-text">
+        <p class="hero-greeting">Hi, I'm</p>
+        <h1>Bryan Tiamson</h1>
+        <h2>Mechanical & Aerospace Engineer</h2>
+        <p class="hero-sub">Physical Design Engineer at Sargent & Lundy · University of Delaware '24</p>
+        <div class="hero-cta">
+          <a href="#contact" class="btn-primary">Get in Touch</a>
+          <a href="#projects" class="btn-secondary">View Projects</a>
+        </div>
       </div>
+      <img src="Portrait/DPT_0738.jpg" alt="Bryan Tiamson" class="hero-photo"/>
     </div>
   </section>
 
@@ -50,10 +53,11 @@
             My background spans aerospace systems, computational fluid dynamics, CAD design, and engineering education. I'm passionate about solving complex technical problems and bringing precision engineering to every project.
           </p>
           <p>
-            Outside of engineering, I'm also a choreographer and performance lead for the Filipino Student Association — I believe creativity and technical thinking go hand in hand.
+            Outside of engineering, I was also a choreographer and performance lead for the Filipino Student Association — I believe creativity and technical thinking go hand in hand.
           </p>
         </div>
         <div class="about-details">
+          <img src="Portrait/DPT_0741.jpg" alt="Bryan Tiamson" class="about-portrait"/>
           <div class="detail-item">
             <span class="detail-label">Location</span>
             <span>Wilmington, DE</span>
@@ -159,67 +163,36 @@
   <section id="projects">
     <div class="container">
       <h3 class="section-label">Projects</h3>
-      <div class="projects-grid">
-
-        <div class="project-card">
-          <div class="project-tag">Aerospace</div>
-          <h4>Airfoil & Glider Design (2D/3D CFD)</h4>
-          <p>Designed and analyzed airfoil geometry using XFoil for 2D analysis and Simscale for 3D computational fluid dynamics simulations.</p>
-          <div class="project-tools">XFoil · Simscale · OpenVSP</div>
-        </div>
-
-        <div class="project-card">
-          <div class="project-tag">Aerospace</div>
-          <h4>Three Stage Rocket Kinematics</h4>
-          <p>Modeled and simulated the kinematics of a three-stage rocket, analyzing thrust, staging events, and trajectory.</p>
-          <div class="project-tools">MATLAB · Rocket Propulsion</div>
-        </div>
-
-        <div class="project-card">
-          <div class="project-tag">Mechanical</div>
-          <h4>NASA Rover Vibration Control</h4>
-          <p>Designed a vibration control system for a NASA rover application, modeling dynamic response and optimizing damping characteristics.</p>
-          <div class="project-tools">MATLAB · Linear Systems</div>
-        </div>
-
-        <div class="project-card">
-          <div class="project-tag">Mechanical</div>
-          <h4>DIY Toy Car with Suspension</h4>
-          <p>Designed and fabricated a toy car with a functional suspension system, applying mechanical design and CAD principles.</p>
-          <div class="project-tools">SolidWorks · Fabrication</div>
-        </div>
-
-        <div class="project-card">
-          <div class="project-tag">Manufacturing</div>
-          <h4>Automated Pill Filling Mechanism</h4>
-          <p>Engineered an automated mechanism for filling pill capsules, focusing on precision, repeatability, and manufacturing feasibility.</p>
-          <div class="project-tools">CAD · Mechanical Design</div>
-        </div>
-
-        <div class="project-card">
-          <div class="project-tag">Manufacturing</div>
-          <h4>Under Armor Instron Shoe Fixture</h4>
-          <p>Designed a custom test fixture for Instron tensile testing of Under Armor footwear to evaluate material performance.</p>
-          <div class="project-tools">Autodesk Inventor · Testing</div>
-        </div>
-
-        <div class="project-card">
-          <div class="project-tag">Physics</div>
-          <h4>1D Chaotic Motion Analysis</h4>
-          <p>Computationally analyzed chaotic motion in a 1D system, exploring nonlinear dynamics and sensitivity to initial conditions.</p>
-          <div class="project-tools">MATLAB · Computational Physics</div>
-        </div>
-
-        <div class="project-card">
-          <div class="project-tag">Manufacturing</div>
-          <h4>Toy Manufacturing Plan</h4>
-          <p>Developed a full manufacturing plan for a toy product, including process selection, tooling, and cost analysis.</p>
-          <div class="project-tools">CAD · Process Engineering</div>
-        </div>
-
-      </div>
+      <div class="projects-grid" id="projectsGrid"></div>
     </div>
   </section>
+
+  <!-- PROJECT MODAL -->
+  <div id="project-modal" class="modal-overlay" onclick="closeProjectModal(event)">
+    <div class="modal-box">
+      <button class="modal-close-btn" onclick="_closeModal()">✕</button>
+      <div class="modal-tag" id="modal-tag"></div>
+      <h2 id="modal-title"></h2>
+      <div class="modal-tools" id="modal-tools"></div>
+
+      <!-- Tabs -->
+      <div class="modal-tabs">
+        <button class="modal-tab active" data-tab="overview" onclick="switchTab('overview')">Overview</button>
+        <button class="modal-tab" data-tab="report" onclick="switchTab('report')">Full Report</button>
+      </div>
+
+      <!-- Overview tab -->
+      <div class="modal-tab-content" id="tab-overview">
+        <div class="modal-gallery" id="modal-gallery"></div>
+        <div class="modal-writeup" id="modal-writeup"></div>
+      </div>
+
+      <!-- Report tab -->
+      <div class="modal-tab-content" id="tab-report" style="display:none;">
+        <iframe class="pdf-embed" id="modal-pdf-iframe" src="" title="Project Report"></iframe>
+      </div>
+    </div>
+  </div>
 
   <!-- SKILLS -->
   <section id="skills">
@@ -302,6 +275,7 @@
     <p>© 2026 Bryan Tiamson</p>
   </footer>
 
+  <script src="projects.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
