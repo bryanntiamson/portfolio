@@ -313,6 +313,7 @@ function renderProjectCards() {
           <div class="card-body">
             <h4>${p.title}</h4>
             <div class="project-tools">${p.tools}</div>
+            <p class="card-summary">${plainSummary.slice(0, 110)}…</p>
           </div>
           <div class="hover-summary">
             <p>${plainSummary}</p>
