@@ -366,6 +366,7 @@ function openProject(id) {
   const iframe = document.getElementById('modal-pdf-iframe');
   iframe.src = '';
   iframe.dataset.src = p.pdf || '';
+  document.getElementById('modal-pdf-link').href = p.pdf || '#';
 
   // Show/hide PDF tab button based on whether a PDF exists
   const pdfTab = document.querySelector('.modal-tab[data-tab="report"]');

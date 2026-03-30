@@ -640,6 +640,10 @@ section:nth-child(even) { background: var(--gray-100); }
   display: block;
 }
 
+.pdf-mobile-link {
+  display: none;
+}
+
 /* Lightbox */
 #lightbox {
   display: none;
@@ -862,7 +866,21 @@ footer {
   }
   .modal-close-btn { top: 20px; right: 20px; }
   .modal-box h2 { font-size: 1.1rem; }
-  .pdf-embed { flex: 1; height: 0; min-height: 300px; }
+  .pdf-embed { display: none; }
+  .pdf-mobile-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: var(--accent);
+    color: var(--white);
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 16px 24px;
+    border-radius: var(--radius);
+    margin-top: 16px;
+  }
 
   /* — Skills — */
   .skill-tags span { font-size: 0.78rem; padding: 4px 10px; }
