@@ -704,6 +704,70 @@ section:nth-child(even) { background: var(--gray-100); }
   font-size: 0.9rem;
 }
 
+/* ── Version A: show-more button ── */
+.video-card--hidden { display: none; }
+.creative-show-more {
+  display: block;
+  margin: 8px auto 0;
+  background: none;
+  border: 1px solid rgba(255,255,255,0.25);
+  color: rgba(255,255,255,0.7);
+  padding: 10px 28px;
+  border-radius: 99px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  letter-spacing: 0.02em;
+  transition: border-color 0.15s, color 0.15s;
+}
+.creative-show-more:hover {
+  border-color: rgba(255,255,255,0.6);
+  color: var(--white);
+}
+
+/* ── Version B: compact thumbnail grid ── */
+.creative-compact-header {
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.35);
+  margin-top: 48px;
+  margin-bottom: 16px;
+}
+.creative-compact-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+.video-card-sm {
+  cursor: pointer;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: rgba(255,255,255,0.04);
+  transition: background 0.15s;
+}
+.video-card-sm:hover { background: rgba(255,255,255,0.09); }
+.video-card-sm .yt-facade {
+  border-radius: 0;
+  aspect-ratio: 16/9;
+}
+.video-card-sm .yt-play-btn svg { width: 40px; height: 28px; }
+.video-card-sm-info {
+  padding: 10px 12px 12px;
+}
+.video-card-sm-event {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: rgba(255,255,255,0.35);
+}
+.video-card-sm-title {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.85);
+  margin-top: 3px;
+  line-height: 1.3;
+}
+
 #creativeGrid {
   display: flex;
   flex-direction: column;

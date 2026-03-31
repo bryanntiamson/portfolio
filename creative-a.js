@@ -1,10 +1,5 @@
-// ── Creative / Dance Videos ────────────────────────────────────────────────
-// To add a new video:
-//   1. Prepend a new entry to DANCE_VIDEOS (most recent first)
-//   2. Set platform: 'youtube' or 'vimeo'
-//   3. Set videoId: the YouTube 11-char ID, or the Vimeo numeric ID
-//   4. Set date as 'YYYY-MM' for sorting, dateDisplay for display
-// ─────────────────────────────────────────────────────────────────────────────
+// PREVIEW A — "Show more" button
+// Top 3 visible by default; rest hidden behind a button.
 
 const DANCE_VIDEOS = [
   {
@@ -102,26 +97,21 @@ const DANCE_VIDEOS = [
   },
 ];
 
-// ── Render ────────────────────────────────────────────────────────────────────
-
 function renderCreativeSection() {
   const grid = document.getElementById('creativeGrid');
   if (!grid) return;
 
-  if (DANCE_VIDEOS.length === 0) {
-    grid.innerHTML = '<p class="creative-empty">Videos coming soon.</p>';
-    return;
-  }
-
   const sorted = [...DANCE_VIDEOS].sort((a, b) => b.date.localeCompare(a.date));
+  const VISIBLE = 3;
 
-  grid.innerHTML = sorted.map(v => {
+  const cardsHTML = sorted.map((v, i) => {
+    const hidden = i >= VISIBLE ? ' video-card--hidden' : '';
     const facadeInner = v.platform === 'vimeo'
       ? `<div class="vimeo-placeholder" data-vimeoid="${v.videoId}"></div>`
       : `<img src="https://img.youtube.com/vi/${v.videoId}/hqdefault.jpg" alt="${v.title}" loading="lazy"/>`;
 
     return `
-    <div class="video-card">
+    <div class="video-card${hidden}">
       <div class="yt-facade" data-videoid="${v.videoId}" data-platform="${v.platform}" onclick="loadVideo(this)" role="button" tabindex="0" aria-label="Play ${v.title}">
         ${facadeInner}
         <div class="yt-play-btn" aria-hidden="true">
@@ -139,7 +129,29 @@ function renderCreativeSection() {
     </div>`;
   }).join('');
 
-  // Async-load Vimeo thumbnails
+  const remaining = sorted.length - VISIBLE;
+  const btnHTML = remaining > 0
+    ? `<button class="creative-show-more" id="creativeShowMore" onclick="toggleMoreVideos()">Show ${remaining} more performances ↓</button>`
+    : '';
+
+  grid.innerHTML = cardsHTML + btnHTML;
+
+  fetchVimeoThumbnails();
+}
+
+function toggleMoreVideos() {
+  const hidden = document.querySelectorAll('.video-card--hidden');
+  const btn = document.getElementById('creativeShowMore');
+  const isExpanded = btn.dataset.expanded === 'true';
+
+  hidden.forEach(card => card.style.display = isExpanded ? '' : 'block');
+  btn.dataset.expanded = isExpanded ? '' : 'true';
+  btn.textContent = isExpanded
+    ? `Show ${hidden.length} more performances ↓`
+    : 'Show fewer ↑';
+}
+
+function fetchVimeoThumbnails() {
   document.querySelectorAll('.vimeo-placeholder[data-vimeoid]').forEach(placeholder => {
     const id = placeholder.dataset.vimeoid;
     fetch(`https://vimeo.com/api/v2/video/${id}.json`)
@@ -151,7 +163,7 @@ function renderCreativeSection() {
         img.loading = 'lazy';
         placeholder.replaceWith(img);
       })
-      .catch(() => { /* placeholder stays */ });
+      .catch(() => {});
   });
 }
 

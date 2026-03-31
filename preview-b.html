@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Preview B — Big 3 + Compact Grid</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <span class="nav-logo">BT</span>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#about">About</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#creative">Creative</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <button class="nav-hamburger" id="navHamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-content">
+      <div class="hero-text">
+        <p class="hero-greeting">Hi, I'm</p>
+        <h1>Bryan Tiamson</h1>
+        <h2>Mechanical &amp; Aerospace Engineer</h2>
+        <p class="hero-sub">Physical Design Engineer at Sargent &amp; Lundy · University of Delaware '24</p>
+        <div class="hero-cta">
+          <a href="#contact" class="btn-primary">Get in Touch</a>
+          <a href="#projects" class="btn-secondary">View Projects</a>
+        </div>
+      </div>
+      <img src="Portrait/DPT_0738.jpg" alt="Bryan Tiamson" class="hero-photo"/>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="container">
+      <h3 class="section-label">About</h3>
+      <div class="about-grid">
+        <div class="about-text">
+          <p>I'm a Mechanical Engineer with a concentration in Aerospace Engineering and a minor in Physics from the University of Delaware (GPA: 3.768, Dean's List). I currently work at Sargent &amp; Lundy as an Associate 2 in Physical Design, where I design electrical substation layouts and systems using AutoCAD.</p>
+          <p>My background spans aerospace systems, computational fluid dynamics, CAD design, and engineering education. I'm passionate about solving complex technical problems and bringing precision engineering to every project.</p>
+          <p>Outside of engineering, I was also a choreographer and performance lead for the Filipino Student Association — I believe creativity and technical thinking go hand in hand.</p>
+        </div>
+        <div class="about-details">
+          <img src="Portrait/DPT_0741.jpg" alt="Bryan Tiamson" class="about-portrait"/>
+          <div class="about-stats">
+            <div class="stat-block"><span class="stat-value">3.768</span><span class="stat-label">GPA · Dean's List</span></div>
+            <div class="stat-block"><span class="stat-value">'24</span><span class="stat-label">BS Mech. Eng., UDel</span></div>
+            <div class="stat-block"><span class="stat-value">DE</span><span class="stat-label">Wilmington, Delaware</span></div>
+            <div class="stat-block"><span class="stat-value">B2</span><span class="stat-label">French · Bilingual</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE (collapsed for preview) -->
+  <section id="experience"><div class="container"><h3 class="section-label">Experience</h3><p style="color:var(--gray-400);font-size:0.9rem;">(Same as main site)</p></div></section>
+
+  <!-- PROJECTS (collapsed for preview) -->
+  <section id="projects"><div class="container"><h3 class="section-label">Projects</h3><p style="color:var(--gray-400);font-size:0.9rem;">(Same as main site)</p></div></section>
+
+  <!-- SKILLS (collapsed for preview) -->
+  <section id="skills"><div class="container"><h3 class="section-label">Skills</h3><p style="color:var(--gray-400);font-size:0.9rem;">(Same as main site)</p></div></section>
+
+  <!-- CREATIVE -->
+  <section id="creative">
+    <div class="container">
+      <h3 class="section-label">Creative Work</h3>
+      <div id="creativeGrid"></div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="container">
+      <h3 class="section-label">Contact</h3>
+      <div class="contact-inner">
+        <p>I'm open to new opportunities in aerospace, mechanical, or physical design engineering. Feel free to reach out!</p>
+        <div class="contact-links">
+          <a href="mailto:bryanntiamson@gmail.com" class="contact-item">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+            bryanntiamson@gmail.com
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer><p>© 2026 Bryan Tiamson</p></footer>
+
+  <script src="projects.js"></script>
+  <script src="creative-b.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

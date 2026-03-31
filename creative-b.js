@@ -1,10 +1,4 @@
-// ── Creative / Dance Videos ────────────────────────────────────────────────
-// To add a new video:
-//   1. Prepend a new entry to DANCE_VIDEOS (most recent first)
-//   2. Set platform: 'youtube' or 'vimeo'
-//   3. Set videoId: the YouTube 11-char ID, or the Vimeo numeric ID
-//   4. Set date as 'YYYY-MM' for sorting, dateDisplay for display
-// ─────────────────────────────────────────────────────────────────────────────
+// PREVIEW B — Top 3 full-size, rest as compact thumbnail grid.
 
 const DANCE_VIDEOS = [
   {
@@ -102,20 +96,15 @@ const DANCE_VIDEOS = [
   },
 ];
 
-// ── Render ────────────────────────────────────────────────────────────────────
-
 function renderCreativeSection() {
   const grid = document.getElementById('creativeGrid');
   if (!grid) return;
 
-  if (DANCE_VIDEOS.length === 0) {
-    grid.innerHTML = '<p class="creative-empty">Videos coming soon.</p>';
-    return;
-  }
-
   const sorted = [...DANCE_VIDEOS].sort((a, b) => b.date.localeCompare(a.date));
+  const featured = sorted.slice(0, 3);
+  const compact = sorted.slice(3);
 
-  grid.innerHTML = sorted.map(v => {
+  const fullCards = featured.map(v => {
     const facadeInner = v.platform === 'vimeo'
       ? `<div class="vimeo-placeholder" data-vimeoid="${v.videoId}"></div>`
       : `<img src="https://img.youtube.com/vi/${v.videoId}/hqdefault.jpg" alt="${v.title}" loading="lazy"/>`;
@@ -139,7 +128,30 @@ function renderCreativeSection() {
     </div>`;
   }).join('');
 
-  // Async-load Vimeo thumbnails
+  const compactCards = compact.length > 0 ? `
+    <p class="creative-compact-header">More Performances</p>
+    <div class="creative-compact-grid">
+      ${compact.map(v => `
+      <div class="video-card-sm">
+        <div class="yt-facade" data-videoid="${v.videoId}" data-platform="${v.platform}" onclick="loadVideo(this)" role="button" tabindex="0" aria-label="Play ${v.title}">
+          <img src="https://img.youtube.com/vi/${v.videoId}/hqdefault.jpg" alt="${v.title}" loading="lazy"/>
+          <div class="yt-play-btn" aria-hidden="true">
+            <svg viewBox="0 0 68 48" width="68" height="48"><path d="M66.52 7.74A8.5 8.5 0 0 0 60.63 1.8C55.32 0 34 0 34 0S12.68 0 7.37 1.8A8.5 8.5 0 0 0 1.48 7.74C0 13.07 0 24 0 24s0 10.93 1.48 16.26A8.5 8.5 0 0 0 7.37 46.2C12.68 48 34 48 34 48s21.32 0 26.63-1.8a8.5 8.5 0 0 0 5.89-5.94C68 34.93 68 24 68 24s0-10.93-1.48-16.26z" fill="#ff0000"/><path d="M27 34l18-10-18-10v20z" fill="#fff"/></svg>
+          </div>
+        </div>
+        <div class="video-card-sm-info">
+          <div class="video-card-sm-event">${v.event} · ${v.dateDisplay}</div>
+          <div class="video-card-sm-title">${v.title}</div>
+        </div>
+      </div>`).join('')}
+    </div>` : '';
+
+  grid.innerHTML = fullCards + compactCards;
+
+  fetchVimeoThumbnails();
+}
+
+function fetchVimeoThumbnails() {
   document.querySelectorAll('.vimeo-placeholder[data-vimeoid]').forEach(placeholder => {
     const id = placeholder.dataset.vimeoid;
     fetch(`https://vimeo.com/api/v2/video/${id}.json`)
@@ -151,7 +163,7 @@ function renderCreativeSection() {
         img.loading = 'lazy';
         placeholder.replaceWith(img);
       })
-      .catch(() => { /* placeholder stays */ });
+      .catch(() => {});
   });
 }
 
