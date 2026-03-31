@@ -140,14 +140,17 @@ function renderCreativeSection() {
 }
 
 function toggleMoreVideos() {
-  const hidden = document.querySelectorAll('.video-card--hidden');
   const btn = document.getElementById('creativeShowMore');
   const isExpanded = btn.dataset.expanded === 'true';
+  const extras = document.querySelectorAll('.video-card--hidden');
+  const count = extras.length;
 
-  hidden.forEach(card => card.style.display = isExpanded ? '' : 'block');
+  extras.forEach(card => {
+    card.style.display = isExpanded ? '' : 'grid';
+  });
   btn.dataset.expanded = isExpanded ? '' : 'true';
   btn.textContent = isExpanded
-    ? `Show ${hidden.length} more performances ↓`
+    ? `Show ${count} more performances ↓`
     : 'Show fewer ↑';
 }
 

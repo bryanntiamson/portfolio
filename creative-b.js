@@ -131,7 +131,9 @@ function renderCreativeSection() {
   const compactCards = compact.length > 0 ? `
     <p class="creative-compact-header">More Performances</p>
     <div class="creative-compact-grid">
-      ${compact.map(v => `
+      ${compact.map(v => {
+        const plain = v.description.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+        return `
       <div class="video-card-sm">
         <div class="yt-facade" data-videoid="${v.videoId}" data-platform="${v.platform}" onclick="loadVideo(this)" role="button" tabindex="0" aria-label="Play ${v.title}">
           <img src="https://img.youtube.com/vi/${v.videoId}/hqdefault.jpg" alt="${v.title}" loading="lazy"/>
@@ -143,7 +145,12 @@ function renderCreativeSection() {
           <div class="video-card-sm-event">${v.event} · ${v.dateDisplay}</div>
           <div class="video-card-sm-title">${v.title}</div>
         </div>
-      </div>`).join('')}
+        <div class="video-card-sm-overlay" onclick="loadVideoFromOverlay(this)">
+          <p>${plain}</p>
+          <span class="hover-hint">Click to play →</span>
+        </div>
+      </div>`;
+      }).join('')}
     </div>` : '';
 
   grid.innerHTML = fullCards + compactCards;
@@ -165,6 +172,11 @@ function fetchVimeoThumbnails() {
       })
       .catch(() => {});
   });
+}
+
+function loadVideoFromOverlay(overlay) {
+  const facade = overlay.closest('.video-card-sm').querySelector('.yt-facade');
+  if (facade) loadVideo(facade);
 }
 
 function loadVideo(facade) {
