@@ -152,6 +152,8 @@ function compactCardHTML(v) {
 
 // ── Render ────────────────────────────────────────────────────────────────────
 
+const MOBILE_BREAKPOINT = 700;
+
 function renderCreativeSection() {
   const grid = document.getElementById('creativeGrid');
   if (!grid) return;
@@ -159,27 +161,35 @@ function renderCreativeSection() {
   const sorted = [...DANCE_VIDEOS].sort((a, b) => b.date.localeCompare(a.date));
   const featured = sorted.slice(0, 3);
   const extras = sorted.slice(3);
+  const isMobile = window.innerWidth <= MOBILE_BREAKPOINT;
 
   // Top 3 — always full size
   const featuredHTML = featured.map(v => fullCardHTML(v)).join('');
 
-  // Desktop: compact thumbnail grid
-  const desktopMoreHTML = extras.length > 0 ? `
-  <div class="creative-desktop-more">
-    <p class="creative-compact-header">More Performances</p>
-    <div class="creative-compact-grid">
-      ${extras.map(compactCardHTML).join('')}
-    </div>
-  </div>` : '';
+  let extrasHTML = '';
+  if (extras.length > 0) {
+    if (isMobile) {
+      // Mobile: hidden full cards behind a show-more button
+      extrasHTML = `
+      <div id="creativeExtraCards" style="display:flex;flex-direction:column;gap:40px;">
+        ${extras.map(v => fullCardHTML(v, ' style="display:none"')).join('')}
+      </div>
+      <button class="creative-show-more" id="creativeShowMore" onclick="toggleMoreVideos()" style="display:block;">
+        Show ${extras.length} more performances ↓
+      </button>`;
+    } else {
+      // Desktop: compact thumbnail grid
+      extrasHTML = `
+      <div>
+        <p class="creative-compact-header">More Performances</p>
+        <div class="creative-compact-grid">
+          ${extras.map(compactCardHTML).join('')}
+        </div>
+      </div>`;
+    }
+  }
 
-  // Mobile: hidden full cards + show-more button
-  const mobileMoreHTML = extras.length > 0 ? `
-  <div class="creative-mobile-more">
-    ${extras.map(v => fullCardHTML(v, ' data-extra="1" style="display:none"')).join('')}
-    <button class="creative-show-more" id="creativeShowMore" onclick="toggleMoreVideos()">Show ${extras.length} more performances ↓</button>
-  </div>` : '';
-
-  grid.innerHTML = featuredHTML + desktopMoreHTML + mobileMoreHTML;
+  grid.innerHTML = featuredHTML + extrasHTML;
 
   // JS-driven hover for compact cards
   grid.querySelectorAll('.video-card-sm').forEach(card => {
@@ -192,15 +202,28 @@ function renderCreativeSection() {
   fetchVimeoThumbnails();
 }
 
+// Re-render on resize if crossing the breakpoint
+let _lastMobile = window.innerWidth <= MOBILE_BREAKPOINT;
+window.addEventListener('resize', () => {
+  const nowMobile = window.innerWidth <= MOBILE_BREAKPOINT;
+  if (nowMobile !== _lastMobile) {
+    _lastMobile = nowMobile;
+    renderCreativeSection();
+  }
+});
+
 function toggleMoreVideos() {
   const btn = document.getElementById('creativeShowMore');
-  const isExpanded = btn.dataset.expanded === 'true';
-  const extras = document.querySelectorAll('.creative-mobile-more [data-extra="1"]');
+  const container = document.getElementById('creativeExtraCards');
+  if (!btn || !container) return;
 
-  extras.forEach(card => { card.style.display = isExpanded ? 'none' : 'grid'; });
+  const isExpanded = btn.dataset.expanded === 'true';
+  const cards = container.querySelectorAll('.video-card');
+
+  cards.forEach(card => { card.style.display = isExpanded ? 'none' : 'grid'; });
   btn.dataset.expanded = isExpanded ? '' : 'true';
   btn.textContent = isExpanded
-    ? `Show ${extras.length} more performances ↓`
+    ? `Show ${cards.length} more performances ↓`
     : 'Show fewer ↑';
 }
 
