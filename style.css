@@ -705,7 +705,7 @@ section:nth-child(even) { background: var(--gray-100); }
 }
 
 /* ── Version A: show-more button ── */
-.video-card--hidden { display: none; }
+.video-card.video-card--hidden { display: none; }
 .creative-show-more {
   display: block;
   margin: 8px auto 0;
@@ -739,6 +739,7 @@ section:nth-child(even) { background: var(--gray-100); }
   gap: 14px;
 }
 .video-card-sm {
+  position: relative;
   cursor: pointer;
   border-radius: var(--radius);
   overflow: hidden;
