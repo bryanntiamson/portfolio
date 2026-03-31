@@ -724,7 +724,11 @@ section:nth-child(even) { background: var(--gray-100); }
   color: var(--white);
 }
 
-/* ── Version B: compact thumbnail grid ── */
+/* ── Desktop/mobile layout switching ── */
+.creative-desktop-more { display: block; }  /* visible on desktop */
+.creative-mobile-more  { display: none; }   /* hidden on desktop */
+
+/* ── Compact thumbnail grid ── */
 .creative-compact-header {
   font-size: 0.75rem;
   letter-spacing: 0.08em;
@@ -1116,4 +1120,7 @@ footer {
   /* — Creative — */
   .video-card { grid-template-columns: 1fr; gap: 16px; }
   #creativeGrid { gap: 40px; }
+  .creative-desktop-more { display: none; }
+  .creative-mobile-more { display: flex; flex-direction: column; gap: 40px; }
+  .creative-compact-grid { grid-template-columns: repeat(2, 1fr); }
 }
