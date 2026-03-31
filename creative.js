@@ -15,7 +15,8 @@ const DANCE_VIDEOS = [
     date: '2025-04',
     dateDisplay: 'April 2025',
     event: 'Culture Night 2025',
-    description: `<p>Description coming soon.</p>`,
+    description: `<p>My first performance after college, and one born from a collision of two worlds. I teamed up with Saumya Agrawal, a senior student who grew up in India — where jump rope was woven into her culture from a young age. She went on to represent India on the national jump rope team, set multiple national and international records, and competed in the World Jump Rope Championships. For her, performing jump rope in the United States was something she had long dreamed of.</p>
+<p>For me, it was the culmination of six years of jump roping and a question I had been sitting with the entire time: what would it look like to fuse jump rope with tinikling? Two movement traditions that share rhythm, footwork, and precision — but had never been brought together. This performance was both of our visions finally finding the same stage.</p>`,
   },
   {
     id: 'culture-night-2024-udfsa',
