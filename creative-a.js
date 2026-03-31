@@ -105,13 +105,13 @@ function renderCreativeSection() {
   const VISIBLE = 3;
 
   const cardsHTML = sorted.map((v, i) => {
-    const hidden = i >= VISIBLE ? ' video-card--hidden' : '';
+    const extraAttr = i >= VISIBLE ? ' data-extra="1" style="display:none"' : '';
     const facadeInner = v.platform === 'vimeo'
       ? `<div class="vimeo-placeholder" data-vimeoid="${v.videoId}"></div>`
       : `<img src="https://img.youtube.com/vi/${v.videoId}/hqdefault.jpg" alt="${v.title}" loading="lazy"/>`;
 
     return `
-    <div class="video-card${hidden}">
+    <div class="video-card"${extraAttr}>
       <div class="yt-facade" data-videoid="${v.videoId}" data-platform="${v.platform}" onclick="loadVideo(this)" role="button" tabindex="0" aria-label="Play ${v.title}">
         ${facadeInner}
         <div class="yt-play-btn" aria-hidden="true">
@@ -142,15 +142,14 @@ function renderCreativeSection() {
 function toggleMoreVideos() {
   const btn = document.getElementById('creativeShowMore');
   const isExpanded = btn.dataset.expanded === 'true';
-  const extras = document.querySelectorAll('.video-card--hidden');
-  const count = extras.length;
+  const extras = document.querySelectorAll('[data-extra="1"]');
 
   extras.forEach(card => {
-    card.style.display = isExpanded ? '' : 'grid';
+    card.style.display = isExpanded ? 'none' : 'grid';
   });
   btn.dataset.expanded = isExpanded ? '' : 'true';
   btn.textContent = isExpanded
-    ? `Show ${count} more performances ↓`
+    ? `Show ${extras.length} more performances ↓`
     : 'Show fewer ↑';
 }
 

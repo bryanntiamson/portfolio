@@ -145,7 +145,7 @@ function renderCreativeSection() {
           <div class="video-card-sm-event">${v.event} · ${v.dateDisplay}</div>
           <div class="video-card-sm-title">${v.title}</div>
         </div>
-        <div class="video-card-sm-overlay" onclick="loadVideoFromOverlay(this)">
+        <div class="video-card-sm-overlay" style="opacity:0" onclick="loadVideoFromOverlay(this)">
           <p>${plain}</p>
           <span class="hover-hint">Click to play →</span>
         </div>
@@ -154,6 +154,14 @@ function renderCreativeSection() {
     </div>` : '';
 
   grid.innerHTML = fullCards + compactCards;
+
+  // JS-driven hover for compact cards (bypasses CSS :hover)
+  document.querySelectorAll('.video-card-sm').forEach(card => {
+    const overlay = card.querySelector('.video-card-sm-overlay');
+    if (!overlay) return;
+    card.addEventListener('mouseenter', () => { overlay.style.opacity = '1'; });
+    card.addEventListener('mouseleave', () => { overlay.style.opacity = '0'; });
+  });
 
   fetchVimeoThumbnails();
 }
