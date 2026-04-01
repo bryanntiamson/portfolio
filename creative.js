@@ -134,9 +134,10 @@ function fullCardHTML(v, extraAttrs = '') {
 
 function compactCardHTML(v) {
   const plain = v.description.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+  const cardId = v.id;
   return `
-  <div class="video-card-sm">
-    <div class="yt-facade" data-videoid="${v.videoId}" data-platform="${v.platform}" onclick="loadVideo(this)" role="button" tabindex="0" aria-label="Play ${v.title}">
+  <div class="video-card-sm" data-card-id="${cardId}">
+    <div class="yt-facade" data-videoid="${v.videoId}" data-platform="${v.platform}" onclick="openVideoModal('${cardId}')" role="button" tabindex="0" aria-label="Play ${v.title}">
       <img src="https://img.youtube.com/vi/${v.videoId}/hqdefault.jpg" alt="${v.title}" loading="lazy"/>
       <div class="yt-play-btn" aria-hidden="true">${playBtn(v.platform)}</div>
     </div>
@@ -144,9 +145,9 @@ function compactCardHTML(v) {
       <div class="video-card-sm-event">${v.event} · ${v.dateDisplay}</div>
       <div class="video-card-sm-title">${v.title}</div>
     </div>
-    <div class="video-card-sm-overlay" style="opacity:0" onclick="loadVideoFromOverlay(this)">
+    <div class="video-card-sm-overlay" style="opacity:0" onclick="openVideoModal('${cardId}')">
       <p>${plain}</p>
-      <span class="hover-hint">Click to play →</span>
+      <span class="hover-hint">Click to expand →</span>
     </div>
   </div>`;
 }
@@ -203,11 +204,12 @@ function renderCreativeSection() {
   fetchVimeoThumbnails();
 }
 
-// Re-render on resize if crossing the breakpoint
+// Re-render on resize if crossing the breakpoint, but not while a video is playing
 let _lastMobile = window.innerWidth <= MOBILE_BREAKPOINT;
 window.addEventListener('resize', () => {
   const nowMobile = window.innerWidth <= MOBILE_BREAKPOINT;
   if (nowMobile !== _lastMobile) {
+    if (document.querySelector('#creativeGrid iframe')) return; // don't disrupt playing video
     _lastMobile = nowMobile;
     renderCreativeSection();
   }
@@ -228,10 +230,53 @@ function toggleMoreVideos() {
     : 'Show fewer ↑';
 }
 
-function loadVideoFromOverlay(overlay) {
-  const facade = overlay.closest('.video-card-sm').querySelector('.yt-facade');
-  if (facade) loadVideo(facade);
+// ── Video Modal (for compact cards) ──────────────────────────────────────────
+
+const VIDEO_MAP = Object.fromEntries(DANCE_VIDEOS.map(v => [v.id, v]));
+
+function openVideoModal(cardId) {
+  const v = VIDEO_MAP[cardId];
+  if (!v) return;
+
+  let modal = document.getElementById('videoModal');
+  if (!modal) {
+    modal = document.createElement('div');
+    modal.id = 'videoModal';
+    modal.className = 'video-modal-overlay';
+    modal.innerHTML = `
+      <div class="video-modal-box">
+        <button class="video-modal-close" onclick="closeVideoModal()">✕</button>
+        <div class="video-modal-embed" id="videoModalEmbed"></div>
+        <div class="video-modal-info" id="videoModalInfo"></div>
+      </div>`;
+    modal.addEventListener('click', e => { if (e.target === modal) closeVideoModal(); });
+    document.body.appendChild(modal);
+  }
+
+  const src = v.platform === 'vimeo'
+    ? `https://player.vimeo.com/video/${v.videoId}?autoplay=1`
+    : `https://www.youtube.com/embed/${v.videoId}?autoplay=1`;
+
+  document.getElementById('videoModalEmbed').innerHTML =
+    `<iframe src="${src}" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen title="${v.title}"></iframe>`;
+  document.getElementById('videoModalInfo').innerHTML =
+    `<div class="video-meta"><span class="video-event">${v.event}</span><span class="video-date">${v.dateDisplay}</span></div>
+     <h4 class="video-title">${v.title}</h4>
+     <div class="video-description">${v.description}</div>`;
+
+  modal.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
 }
+
+function closeVideoModal() {
+  const modal = document.getElementById('videoModal');
+  if (!modal) return;
+  modal.style.display = 'none';
+  document.getElementById('videoModalEmbed').innerHTML = '';
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeVideoModal(); });
 
 function loadVideo(facade) {
   const id = facade.dataset.videoid;
